@@ -1,23 +1,15 @@
 #!/usr/bin/env bash
 
-if [ ! -z "$WWWUSER" ]; then
-    usermod -u $WWWUSER sail
-fi
-
 if [ ! -d /.composer ]; then
     mkdir /.composer
 fi
 
 chmod -R ugo+rw /.composer
 webserver=${WEBSERVER:-cli}
-if [ $# -gt 0 ]; then
-    exec gosu $WWWUSER "$@"
-else
-  if [ "$webserver" = "cli" ]; then
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
-    elif [ "$webserver" = "octane" ]; then
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane.conf
-    elif [ "$webserver" = "octane-watch" ]; then
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane-watch.conf
-  fi
+if [ "$webserver" = "cli" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
+  elif [ "$webserver" = "octane" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane.conf
+  elif [ "$webserver" = "octane-watch" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane-watch.conf
 fi
