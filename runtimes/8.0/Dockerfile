@@ -48,8 +48,8 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
 
 COPY start-container /usr/local/bin/start-container
 COPY cli.conf /etc/supervisor/conf.d/cli.conf
-COPY swoole.conf /etc/supervisor/conf.d/swoole.conf
-COPY rr.conf /etc/supervisor/conf.d/rr.conf
+COPY octane.conf /etc/supervisor/conf.d/octane.conf
+COPY octane-watch.conf /etc/supervisor/conf.d/octane-watch.conf
 COPY php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 

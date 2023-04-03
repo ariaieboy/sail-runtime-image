@@ -15,9 +15,9 @@ if [ $# -gt 0 ]; then
 else
   if [ "$webserver" = "cli" ]; then
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
-    elif [ "$webserver" = "swoole" ]; then
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/swoole.conf
-    elif [ "$webserver" = "rr" ]; then
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/rr.conf
+    elif [ "$webserver" = "octane" ]; then
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane.conf
+    elif [ "$webserver" = "octane-watch" ]; then
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane-watch.conf
   fi
 fi
