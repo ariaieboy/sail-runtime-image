@@ -48,7 +48,9 @@ RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
 COPY start-container /usr/local/bin/start-container
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY cli.conf /etc/supervisor/conf.d/cli.conf
+COPY swoole.conf /etc/supervisor/conf.d/swoole.conf
+COPY rr.conf /etc/supervisor/conf.d/rr.conf
 COPY php.ini /etc/php/7.4/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 

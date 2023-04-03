@@ -9,9 +9,15 @@ if [ ! -d /.composer ]; then
 fi
 
 chmod -R ugo+rw /.composer
-
+webserver=${WEBSERVER:-cli}
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+  if [ "$webserver" = "cli" ]; then
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
+    elif [ "$webserver" = "swoole" ]; then
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/swoole.conf
+    elif [ "$webserver" = "rr" ]; then
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/rr.conf
+  fi
 fi
