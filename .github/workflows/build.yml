@@ -13,15 +13,15 @@ jobs:
         fail-fast: false
         matrix:
           include:
-            - dockerfile: ./runtimes/7.4/Dockerfile
-              context: ./runtimes/7.4
-              tags: ariaieboy/sail-runtime-image:7.4
-            - dockerfile: ./runtimes/8.0/Dockerfile
-              context: ./runtimes/8.0
-              tags: ariaieboy/sail-runtime-image:8.0
-            - dockerfile: ./runtimes/8.1/Dockerfile
-              context: ./runtimes/8.1
-              tags: ariaieboy/sail-runtime-image:8.1
+#            - dockerfile: ./runtimes/7.4/Dockerfile
+#              context: ./runtimes/7.4
+#              tags: ariaieboy/sail-runtime-image:7.4
+#            - dockerfile: ./runtimes/8.0/Dockerfile
+#              context: ./runtimes/8.0
+#              tags: ariaieboy/sail-runtime-image:8.0
+#            - dockerfile: ./runtimes/8.1/Dockerfile
+#              context: ./runtimes/8.1
+#              tags: ariaieboy/sail-runtime-image:8.1
             - dockerfile: ./runtimes/8.2/Dockerfile
               context: ./runtimes/8.2
               tags: ariaieboy/sail-runtime-image:8.2
