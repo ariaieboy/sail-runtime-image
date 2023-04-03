@@ -92,3 +92,9 @@ This option uses octane webserver with `--watch` option.
 
 ## Update the image
 For updating the image you only need to run `sail pull` and restart your containers.
+
+## License
+
+Copyright © AriaieBOY
+
+Sail Runtime Image is open-sourced software licensed under the [MIT license](LICENSE.md).
