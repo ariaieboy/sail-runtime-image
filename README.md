@@ -97,4 +97,4 @@ For updating the image you only need to run `sail pull` and restart your contain
 
 Copyright © AriaieBOY
 
-Sail Runtime Image is open-sourced software licensed under the [MIT license](LICENSE.md).
+Sail Runtime Image is open-sourced software licensed under the [MIT license](LICENSE).
