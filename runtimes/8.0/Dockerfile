@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 LABEL maintainer="Taylor Otwell"
 
+ARG WWWGROUP
 ARG NODE_VERSION=16
 ARG POSTGRES_VERSION=13
 
@@ -45,6 +46,7 @@ RUN apt-get update \
 RUN update-alternatives --set php /usr/bin/php8.0
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
+RUN useradd -ms /bin/bash -u 1337 sail
 
 COPY start-container /usr/local/bin/start-container
 COPY cli.conf /etc/supervisor/conf.d/cli.conf

@@ -2,6 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="Taylor Otwell"
 
+ARG WWWGROUP
 ARG NODE_VERSION=18
 ARG POSTGRES_VERSION=15
 
@@ -44,12 +45,13 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
+RUN useradd -ms /bin/bash -u 1337 sail
 
-COPY start-container /usr/local/bin/start-container
-COPY cli.conf /etc/supervisor/conf.d/cli.conf
-COPY octane.conf /etc/supervisor/conf.d/octane.conf
-COPY octane-watch.conf /etc/supervisor/conf.d/octane-watch.conf
-COPY php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
+COPY ../common/start-container /usr/local/bin/start-container
+COPY ../common/cli.conf /etc/supervisor/conf.d/cli.conf
+COPY ../common/octane.conf /etc/supervisor/conf.d/octane.conf
+COPY ../common/octane-watch.conf /etc/supervisor/conf.d/octane-watch.conf
+COPY ../common/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
