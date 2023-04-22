@@ -1,6 +1,9 @@
 name: Publish Docker
 on:
   workflow_dispatch:
+  push:
+    branches:
+        - main
   schedule:
     - cron: 0 0 * * 3
 jobs:
@@ -9,15 +12,11 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
+            php: [8.0,8.1,8.2]
+            node: [18,20]
           include:
             - dockerfile: ./runtimes/7.4/Dockerfile
               tags: ariaieboy/sail-runtime-image:7.4
-            - dockerfile: ./runtimes/8.0/Dockerfile
-              tags: ariaieboy/sail-runtime-image:8.0
-            - dockerfile: ./runtimes/8.1/Dockerfile
-              tags: ariaieboy/sail-runtime-image:8.1
-            - dockerfile: ./runtimes/8.2/Dockerfile
-              tags: ariaieboy/sail-runtime-image:8.2
     steps:
       -
         name: Checkout
@@ -40,6 +39,10 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           context: ./runtimes/common
-          file: ${{ matrix.dockerfile }}
+          file: ./runtimes/${{ matrix.php }}/Dockerfile
           push: true
-          tags: ${{ matrix.tags }}
+          build-args: NODE_VERSION=${{ matrix.node }}
+          if: ${{ matrix.node }} == 20
+          tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }},ariaieboy/sail-runtime-image:${{ matrix.php }}
+          if: ${{ matrix.node }} == 18
+          tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }}
