@@ -2,10 +2,8 @@ name: Publish Docker
 on:
   workflow_dispatch:
   push:
-    branches:
-        - main
-    paths:
-        - 'runtimes/**'
+    branches: ['main']
+    paths: ['runtimes/**']
   schedule:
     - cron: 0 0 * * 3
 jobs:
