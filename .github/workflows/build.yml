@@ -4,6 +4,8 @@ on:
   push:
     branches:
         - main
+    paths:
+        - 'runtimes/**'
   schedule:
     - cron: 0 0 * * 3
 jobs:

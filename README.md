@@ -3,7 +3,19 @@
 One of the Laravel Sail problems is the build step. Depending on your network and machine power, it might take a while to build the image locally.
 You can remove the build step by using our Pre-built images.
 
-> **_NOTE:_**  All images will use NodeJS version 18 and Postgres-client version 15.
+> **_NOTE:_**  All images uses Postgres-client version 15.
+
+## Available Tags
+| Tags           | Description      |
+|----------------|------------------|
+| `8.0`,`8.0-20` | PHP 8.0, Node 20 |
+| `8.0-18`       | PHP 8.0, Node 18 |
+| `8.1`,`8.1-20` | PHP 8.1, Node 20 |
+| `8.1-18`       | PHP 8.1, Node 18 |
+| `8.2`,`8.2-20` | PHP 8.2, Node 20 |
+| `8.2-18`       | PHP 8.2, Node 18 |
+
+
 
 ## Usage
 After installing [laravel-sail](https://laravel.com/docs/sail) you must remove the build step:
