@@ -14,9 +14,6 @@ jobs:
         matrix:
             php: [8.0,8.1,8.2]
             node: [18,20]
-          include:
-            - dockerfile: ./runtimes/7.4/Dockerfile
-              tags: ariaieboy/sail-runtime-image:7.4
     steps:
       -
         name: Checkout
