@@ -31,7 +31,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push Node 20
+        if: ${{ matrix.node }} == 20
         uses: docker/build-push-action@v4
         with:
           platforms: linux/amd64,linux/arm64
@@ -39,7 +40,15 @@ jobs:
           file: ./runtimes/${{ matrix.php }}/Dockerfile
           push: true
           build-args: NODE_VERSION=${{ matrix.node }}
-          if: ${{ matrix.node }} == 20
           tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }},ariaieboy/sail-runtime-image:${{ matrix.php }}
-          if: ${{ matrix.node }} == 18
+      -
+        name: Build and push Node 18
+        if: ${{ matrix.node }} == 18
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64,linux/arm64
+          context: ./runtimes/common
+          file: ./runtimes/${{ matrix.php }}/Dockerfile
+          push: true
+          build-args: NODE_VERSION=${{ matrix.node }}
           tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }}
