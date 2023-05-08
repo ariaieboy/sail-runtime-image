@@ -41,6 +41,8 @@ jobs:
           push: true
           build-args: NODE_VERSION=${{ matrix.node }}
           tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }},ariaieboy/sail-runtime-image:${{ matrix.php }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       -
         name: Build and push Node 18
         if: ${{ matrix.node }} == 18
@@ -52,3 +54,5 @@ jobs:
           push: true
           build-args: NODE_VERSION=${{ matrix.node }}
           tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
