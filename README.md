@@ -97,7 +97,7 @@ This option uses octane webserver with `--watch` option.
 
 * It's Pre-built and you only need to pull it from docker hub.
 * It supports 3 different Webserver without needing to change the image and rebuild it.
-* Additional packages installed including `chromium-chromedriver pnpm svgo libheif-dev jpegoptim optipng pngquant gifsicle`
+* Additional packages installed including `pnpm svgo libheif-dev jpegoptim optipng pngquant gifsicle`
 * It will update weekly at 00:00 on Wednesday
 
 ### cons
