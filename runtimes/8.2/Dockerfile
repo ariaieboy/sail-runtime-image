@@ -36,7 +36,7 @@ RUN apt-get update \
     && apt-get update \
     && corepack enable \
     && corepack prepare yarn@stable --activate \
-    && npm install -g pnpm npm svgo \
+    && npm install -g svgo \
     && apt-get install -y mysql-client \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
