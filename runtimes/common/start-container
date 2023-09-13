@@ -3,6 +3,10 @@ if [ ! -z "$WWWUSER" ]; then
     usermod -u $WWWUSER sail
 fi
 
+if [! -z "$WWWGROUP"]; then
+  groupmod -g $WWWGROUP sail
+fi
+
 if [ ! -d /.composer ]; then
     mkdir /.composer
 fi

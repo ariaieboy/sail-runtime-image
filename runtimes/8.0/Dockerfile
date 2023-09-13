@@ -1,8 +1,7 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="Taylor Otwell"
+LABEL maintainer="AriaieBOY"
 
-ARG WWWGROUP
 ARG NODE_VERSION
 ARG POSTGRES_VERSION=15
 
@@ -14,9 +13,9 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
-    && apt-get install -y libheif-dev libavif-dev jpegoptim optipng pngquant gifsicle gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils \
-    && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
-    && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+        && mkdir -p /etc/apt/keyrings \
+        && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils librsvg2-bin fswatch \
+                              libheif-dev libavif-dev jpegoptim optipng pngquant gifsicle \
     && apt-get update \
     && apt-get install -y php8.0-cli php8.0-dev \
        php8.0-pgsql php8.0-sqlite3 php8.0-gd php8.0-imagick php8.0-xhprof graphviz \
@@ -30,13 +29,13 @@ RUN apt-get update \
     && curl -sLS https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g npm \
+    && npm install -g bun pnpm svgo \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/pgdg.gpg >/dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update \
     && apt-get install -y yarn \
-    && npm install -g pnpm npm \
     && apt-get install -y mysql-client \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
@@ -46,7 +45,7 @@ RUN apt-get update \
 RUN update-alternatives --set php /usr/bin/php8.0
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
-RUN useradd -ms /bin/bash -u 1337 sail
+RUN useradd -ms /bin/bash sail
 
 COPY start-container /usr/local/bin/start-container
 COPY cli.conf /etc/supervisor/conf.d/cli.conf
