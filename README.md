@@ -7,16 +7,17 @@ You can remove the build step by using our Pre-built images.
 
 ## Available Tags
 
-| Tags           | Description      | Postgres-client |
-|----------------|------------------|-----------------|
-| `8.0`,`8.0-20` | PHP 8.0, Node 20 | 15              |
-| `8.0-18`       | PHP 8.0, Node 18 | 15              |
-| `8.1`,`8.1-20` | PHP 8.1, Node 20 | 15              |
-| `8.1-18`       | PHP 8.1, Node 18 | 15              |
-| `8.2`,`8.2-20` | PHP 8.2, Node 20 | 15              |
-| `8.2-18`       | PHP 8.2, Node 18 | 15              |
-| `8.3`,`8.3-20` | PHP 8.3, Node 20 | 16              |
-| `8.3-18`       | PHP 8.3, Node 18 | 16              |
+| Tags                        | Description                             | Postgres-client |
+|-----------------------------|-----------------------------------------|-----------------|
+| `8.0`,`8.0-20`              | PHP 8.0, Node 20                        | 15              |
+| `8.0-18`                    | PHP 8.0, Node 18                        | 15              |
+| `8.1`,`8.1-20`              | PHP 8.1, Node 20                        | 15              |
+| `8.1-18`                    | PHP 8.1, Node 18                        | 15              |
+| `8.2`,`8.2-20`              | PHP 8.2, Node 20                        | 15              |
+| `8.2-18`                    | PHP 8.2, Node 18                        | 15              |
+| `8.3`,`8.3-20`              | PHP 8.3, Node 20                        | 16              |
+| `8.3-18`                    | PHP 8.3, Node 18                        | 16              |
+| `8.x-alpine`,`8.x-y-alpine` | same as above with Alpine as base image | 15              |
 
 ## Usage
 
@@ -78,6 +79,29 @@ services:
       WEBSERVER: cli
       WWWUSER: '${WWWUSER}'
       WWWGROUP: '${WWWGROUP}'
+      LARAVEL_SAIL: 1
+      XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+      XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+    volumes:
+      - '.:/var/www/html'
+    networks:
+      - sail
+```
+
+For using Alpine you can add `user` to the docker-compose service:
+
+```yml
+services:
+  laravel.test:
+    image: ariaieboy/sail-runtime-image:8.2-alpine
+    user: "${WWWUSER}:${WWWGROUP}"
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${APP_PORT:-80}:80'
+      - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+    environment:
+      WEBSERVER: cli
       LARAVEL_SAIL: 1
       XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
       XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
