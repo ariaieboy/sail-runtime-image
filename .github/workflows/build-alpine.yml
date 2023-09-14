@@ -1,4 +1,4 @@
-name: Publish Docker
+name: Publish Docker Alpine
 on:
   workflow_dispatch:
   push:
@@ -12,7 +12,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-            php: ['8.0','8.1','8.2','8.3']
+            php: ['8.0','8.1','8.2']
             node: ['18','20']
     steps:
       -
