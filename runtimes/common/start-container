@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
-if [ ! -z "$WWWUSER" ]; then
+#!/bin/sh
+if [ -n "$WWWUSER" ]; then
+    echo "usermod run"
     usermod -u $WWWUSER sail
 fi
 
-if [! -z "$WWWGROUP"]; then
-  groupmod -g $WWWGROUP sail
+if [ -n "$WWWGROUP" ]; then
+    echo "groupmod run"
+    groupmod -g $WWWGROUP sail
 fi
 
 if [ ! -d /.composer ]; then
