@@ -51,6 +51,7 @@ services:
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
 +           WEBSERVER: cli
++           WWWGROUP: '${WWWGROUP}'
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
@@ -70,6 +71,7 @@ services:
         environment:
             WEBSERVER: cli
             WWWUSER: '${WWWUSER}'
+            WWWGROUP: '${WWWGROUP}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
