@@ -1,0 +1,42 @@
+ARG NODE_VERSION
+ARG POSTGRES_VERSION=15
+
+FROM node:${NODE_VERSION}-alpine AS node
+
+FROM php:8.2-cli-alpine
+
+LABEL maintainer="AriaieBOY"
+
+WORKDIR /var/www/html
+ENV TZ=UTC
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions @composer pgsql pcov xdebug gd imap zip bcmath pcntl soap intl exif imagick ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql pdo_mysql xhprof
+
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
+RUN npm install -g npm \
+    && npm install -g pnpm svgo \
+    && apk add --update supervisor  postgresql${POSTGRES_VERSION}-client jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
+
+RUN adduser -D sail
+
+RUN ln -s /usr/local/bin/php /usr/bin/php
+COPY start-container-alpine /usr/local/bin/start-container
+COPY cli.conf /etc/supervisor/conf.d/cli.conf
+COPY octane.conf /etc/supervisor/conf.d/octane.conf
+COPY octane-watch.conf /etc/supervisor/conf.d/octane-watch.conf
+COPY php.ini "$PHP_INI_DIR/php.ini"
+RUN mkdir -p /var/log/supervisor
+RUN chmod +x /usr/local/bin/start-container
+
+EXPOSE 8000
+
+ENTRYPOINT ["start-container"]

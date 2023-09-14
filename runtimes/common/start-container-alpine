@@ -1,0 +1,9 @@
+#!/bin/sh
+webserver=${WEBSERVER:-cli}
+if [ "$webserver" = "cli" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
+  elif [ "$webserver" = "octane" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane.conf
+  elif [ "$webserver" = "octane-watch" ]; then
+  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane-watch.conf
+fi
