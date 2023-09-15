@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push Node 20
-        if: ${{ matrix.node }} == 20
+        if: ${{ matrix.node }} == '20'
         uses: docker/build-push-action@v4
         with:
           platforms: linux/amd64
@@ -45,7 +45,7 @@ jobs:
           cache-to: type=gha,mode=max
       -
         name: Build and push Node 18
-        if: ${{ matrix.node }} == 18
+        if: ${{ matrix.node }} == '18'
         uses: docker/build-push-action@v4
         with:
           platforms: linux/amd64
