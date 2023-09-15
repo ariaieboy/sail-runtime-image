@@ -137,6 +137,8 @@ This option uses octane webserver with `--watch` option.
 * It supports 3 different Webserver without needing to change the image and rebuild it.
 * Additional packages installed including `libavif-bin pnpm svgo libheif-dev jpegoptim optipng pngquant gifsicle`
 * It will update weekly at 00:00 on Wednesday
+* The image size is smaller than Laravel Sail default build
+* Our Alpine variant is 60% smaller (475 vs 180 MB)
 
 ### cons
 
