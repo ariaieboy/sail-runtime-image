@@ -50,7 +50,7 @@ jobs:
         with:
           platforms: linux/amd64
           context: ./runtimes/common
-          file: ./runtimes/${{ matrix.php }}/Dockerfile
+          file: ./runtimes/${{ matrix.php }}/DockerfileAlpine
           push: true
           build-args: NODE_VERSION=${{ matrix.node }}
           tags: ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }}-alpine
