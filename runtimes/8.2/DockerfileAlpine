@@ -1,5 +1,5 @@
 ARG NODE_VERSION
-ARG POSTGRES_VERSION=15
+ARG POSTGRES_VERSION=16
 
 FROM node:${NODE_VERSION}-alpine AS node
 
@@ -24,7 +24,9 @@ COPY --from=node /usr/local/bin /usr/local/bin
 
 RUN npm install -g npm \
     && npm install -g pnpm svgo \
-    && apk add --update supervisor  postgresql${POSTGRES_VERSION}-client jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
+    && apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+  postgresql${POSTGRES_VERSION}-client 
 
 RUN adduser -D sail
 
