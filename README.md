@@ -9,14 +9,13 @@ You can remove the build step by using our Pre-built images.
 
 | Tags                        | Description                             | Postgres-client |
 |-----------------------------|-----------------------------------------|-----------------|
-| `8.0`,`8.0-20`              | PHP 8.0, Node 20                        | 15              |
-| `8.0-18`                    | PHP 8.0, Node 18                        | 15              |
+| `8.0`,`8.0-20`              | ~~PHP 8.0, Node 20~~                        | ~~15~~              |
+| `8.0-18`                    | ~~PHP 8.0, Node 18~~                        | ~~15~~              |
 | `8.1`,`8.1-20`              | PHP 8.1, Node 20                        | 15              |
 | `8.1-18`                    | PHP 8.1, Node 18                        | 15              |
 | `8.2`,`8.2-20`              | PHP 8.2, Node 20                        | 16              |
 | `8.2-18`                    | PHP 8.2, Node 18                        | 16              |
 | `8.3`,`8.3-20`              | PHP 8.3, Node 20                        | 16              |
-| `8.3-18`                    | PHP 8.3, Node 18                        | 16              |
 | `8.x-alpine`,`8.x-y-alpine` | same as above with Alpine as base image | 16              |
 
 ## Usage
