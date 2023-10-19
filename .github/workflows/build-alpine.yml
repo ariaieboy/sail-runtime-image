@@ -38,7 +38,7 @@ jobs:
         if: matrix.node == '20'
         uses: docker/build-push-action@v4
         with:
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           context: ./runtimes/common
           file: ./runtimes/${{ matrix.php }}/DockerfileAlpine
           push: true
@@ -51,7 +51,7 @@ jobs:
         if: matrix.node == '18'
         uses: docker/build-push-action@v4
         with:
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           context: ./runtimes/common
           file: ./runtimes/${{ matrix.php }}/DockerfileAlpine
           push: true
