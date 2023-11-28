@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: ['main']
-    paths: ['runtimes/**']
+    paths: ['runtimes/**','.github/workflows/build-alpine.yml']
   schedule:
     - cron: 0 0 * * 3
 jobs:
