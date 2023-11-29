@@ -152,7 +152,7 @@ Every Image has lots of dependencies that can have multiple versions.
 We break this into 3 major components.
 OS version:
 In base images, we are going to use the latest LTS version of the Ubuntu. For example, when PHP 8.3 was released the latest LTS version of Ubuntu was 22.04 so we created the base image using the Ubuntu 22.04.
-In alpine variants, we use the NodeJS alpine Linux image as the base so we are tied to the NodeJS official docker image for the alpine version.
+In alpine variants, we use the PHP8.x-cli-alpine image as the base so we are tied to the PHP official docker image for the alpine version.
 
 NodeJS version:
 In new tags, we are only supporting the latest LTS version of the NodeJS. For example, PHP 8.3 only supports NodeJS 20.
