@@ -144,24 +144,30 @@ This option uses octane webserver with `--watch` option.
 
 ## Update the image
 
-For updating the image you only need to run `sail pull` and restart your containers.
+To update the image you only need to run `sail pull` and restart your containers.
 
 ## Version Support Policy 
 
 Every Image has lots of dependencies that can have multiple versions.
+
 We break this into 3 major components.
-OS version:
+
+* OS version:
+
 In base images, we are going to use the latest LTS version of the Ubuntu. For example, when PHP 8.3 was released the latest LTS version of Ubuntu was 22.04 so we created the base image using the Ubuntu 22.04.
 In alpine variants, we use the PHP8.x-cli-alpine image as the base so we are tied to the PHP official docker image for the alpine version.
 
-NodeJS version:
+* NodeJS version:
+
 In new tags, we are only supporting the latest LTS version of the NodeJS. For example, PHP 8.3 only supports NodeJS 20.
 If a new LTS version of NodeJS is released, we are going to add a new image tag with that specific NodeJS version. But the default one will only be the first version.
 
-PostgreSQL Client:
-Since every major version of PostgreSQL Client is backward compatible with all supported versions of PostgreSQL we are gonna update the Client to the latest version in all tags.
+* PostgreSQL Client:
 
-Other components:
+Since every major version of PostgreSQL Client is backward compatible with all supported versions of PostgreSQL, we will update the Client to the latest version in all tags.
+
+* Other components:
+
 Every other component will be updated to the latest version with each build.
 
 > We only support the active maintenance versions of the packages. For example, if the NodeJS 18 support ends we are gonna remove the tags that contain NodeJS 18 from the build process.
