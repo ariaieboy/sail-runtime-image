@@ -41,12 +41,12 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
 ```
 
-Then you need to change the image to `ariaieboy/sail-runtime-image:version` the version can be `7.4`,`8.0`,`8.1`,`8.2`:
+Then you need to change the image to `ariaieboy/sail-runtime-image:version` the version can be `8.1`,`8.2`,`8.3`:
 
 ```diff
 services:
     laravel.test:
-+       image: ariaieboy/sail-runtime-image:8.2
++       image: ariaieboy/sail-runtime-image:8.3
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -125,6 +125,10 @@ built-in `php artisan serve`
 ### `octane-watch`
 
 This option uses octane webserver with `--watch` option.
+
+### `custom`
+
+You can provide a new env variable called `SUPERVISOR_PHP_COMMAND` and pass a custom supervisor php command.
 
 ## Difference with laravel-sail runtimes
 
