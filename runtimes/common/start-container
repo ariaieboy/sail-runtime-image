@@ -17,15 +17,15 @@ chmod -R ugo+rw /.composer
 webserver=${WEBSERVER:-cli}
 
 if [ "$webserver" = "cli" ]; then
-  export ENV_SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
   elif [ "$webserver" = "octane" ]; then
-  export ENV_SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=80"
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=80"
   elif [ "$webserver" = "octane-watch" ]; then
-  export ENV_SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --watch --host=0.0.0.0 --port=80"
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --watch --host=0.0.0.0 --port=80"
 fi
 
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else
-    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisor.conf
+    exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi

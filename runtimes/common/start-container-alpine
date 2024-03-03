@@ -1,9 +1,11 @@
 #!/bin/sh
 webserver=${WEBSERVER:-cli}
 if [ "$webserver" = "cli" ]; then
-  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/cli.conf
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
   elif [ "$webserver" = "octane" ]; then
-  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane.conf
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=80"
   elif [ "$webserver" = "octane-watch" ]; then
-  exec /usr/bin/supervisord -c /etc/supervisor/conf.d/octane-watch.conf
+  export SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --watch --host=0.0.0.0 --port=80"
 fi
+
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
