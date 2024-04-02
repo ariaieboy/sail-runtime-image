@@ -1,5 +1,58 @@
 ARG NODE_VERSION
 ARG POSTGRES_VERSION=16
+FROM alpine:3.18 AS build
+
+# https://github.com/oven-sh/bun/releases
+ARG BUN_VERSION=latest
+
+# TODO: Instead of downloading glibc from a third-party source, we should
+#      build it from source. This is a temporary solution.
+#      See: https://github.com/sgerrand/alpine-pkg-glibc
+
+# https://github.com/sgerrand/alpine-pkg-glibc/releases
+# https://github.com/sgerrand/alpine-pkg-glibc/issues/176
+ARG GLIBC_VERSION=2.34-r0
+
+# https://github.com/oven-sh/bun/issues/5545#issuecomment-1722461083
+ARG GLIBC_VERSION_AARCH64=2.26-r1
+
+RUN apk --no-cache add \
+      ca-certificates \
+      curl \
+      dirmngr \
+      gpg \
+      gpg-agent \
+      unzip \
+    && arch="$(apk --print-arch)" \
+    && cd /tmp \
+    && case "${arch##*-}" in \
+      x86_64) curl "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" \
+        -fsSLO \
+        --compressed \
+        --retry 5 \
+        || (echo "error: failed to download: glibc v${GLIBC_VERSION}" && exit 1) \
+      && mv "glibc-${GLIBC_VERSION}.apk" glibc.apk \
+      && curl "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk" \
+        -fsSLO \
+        --compressed \
+        --retry 5 \
+        || (echo "error: failed to download: glibc-bin v${GLIBC_VERSION}" && exit 1) \
+      && mv "glibc-bin-${GLIBC_VERSION}.apk" glibc-bin.apk ;; \
+      aarch64) curl "https://raw.githubusercontent.com/squishyu/alpine-pkg-glibc-aarch64-bin/master/glibc-${GLIBC_VERSION_AARCH64}.apk" \
+        -fsSLO \
+        --compressed \
+        --retry 5 \
+        || (echo "error: failed to download: glibc v${GLIBC_VERSION_AARCH64}" && exit 1) \
+      && mv "glibc-${GLIBC_VERSION_AARCH64}.apk" glibc.apk \
+      && curl "https://raw.githubusercontent.com/squishyu/alpine-pkg-glibc-aarch64-bin/master/glibc-bin-${GLIBC_VERSION_AARCH64}.apk" \
+        -fsSLO \
+        --compressed \
+        --retry 5 \
+        || (echo "error: failed to download: glibc-bin v${GLIBC_VERSION_AARCH64}" && exit 1) \
+      && mv "glibc-bin-${GLIBC_VERSION_AARCH64}.apk" glibc-bin.apk ;; \
+      *) echo "error: unsupported architecture '$arch'"; exit 1 ;; \
+    esac
+
 
 FROM node:${NODE_VERSION}-alpine AS node
 
@@ -23,11 +76,19 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-RUN npm install -g npm \
-    && npm install -g bun pnpm svgo \
-    && apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev ffmpeg git nano && rm  -rf /tmp/* /var/cache/apk/*
+# Temporarily use the `build`-stage /tmp folder to access the glibc APKs:
+RUN --mount=type=bind,from=build,source=/tmp,target=/tmp \
+      apk --no-cache --force-overwrite --allow-untrusted add \
+      /tmp/glibc.apk \
+      /tmp/glibc-bin.apk
+
 RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
-  postgresql${POSTGRES_VERSION}-client
+  postgresql${POSTGRES_VERSION}-client \
+  && apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev ffmpeg git nano && rm  -rf /tmp/* /var/cache/apk/*
+
+RUN npm install -g npm \
+    && npm install -g bun pnpm svgo
+
 
 RUN adduser -D sail
 
