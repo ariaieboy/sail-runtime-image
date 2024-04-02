@@ -24,6 +24,44 @@ RUN apk --no-cache add \
       gpg-agent \
       unzip \
     && arch="$(apk --print-arch)" \
+    && case "${arch##*-}" in \
+      x86_64) build="x64-baseline";; \
+      aarch64) build="aarch64";; \
+      *) echo "error: unsupported architecture: $arch"; exit 1 ;; \
+    esac \
+    && version="$BUN_VERSION" \
+    && case "$version" in \
+      latest | canary | bun-v*) tag="$version"; ;; \
+      v*)                       tag="bun-$version"; ;; \
+      *)                        tag="bun-v$version"; ;; \
+    esac \
+    && case "$tag" in \
+      latest) release="latest/download"; ;; \
+      *)      release="download/$tag"; ;; \
+    esac \
+    && curl "https://github.com/oven-sh/bun/releases/$release/bun-linux-$build.zip" \
+      -fsSLO \
+      --compressed \
+      --retry 5 \
+      || (echo "error: failed to download: $tag" && exit 1) \
+    && for key in \
+      "F3DCC08A8572C0749B3E18888EAB4D40A7B22B59" \
+    ; do \
+      gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" \
+      || gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key" ; \
+    done \
+    && curl "https://github.com/oven-sh/bun/releases/$release/SHASUMS256.txt.asc" \
+      -fsSLO \
+      --compressed \
+      --retry 5 \
+    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+      || (echo "error: failed to verify: $tag" && exit 1) \
+    && grep " bun-linux-$build.zip\$" SHASUMS256.txt | sha256sum -c - \
+      || (echo "error: failed to verify: $tag" && exit 1) \
+    && unzip "bun-linux-$build.zip" \
+    && mv "bun-linux-$build/bun" /usr/local/bin/bun \
+    && rm -f "bun-linux-$build.zip" SHASUMS256.txt.asc SHASUMS256.txt \
+    && chmod +x /usr/local/bin/bun \
     && cd /tmp \
     && case "${arch##*-}" in \
       x86_64) curl "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" \
@@ -75,19 +113,24 @@ COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
+COPY --from=build /usr/local/bin/bun /usr/local/bin/
 
 # Temporarily use the `build`-stage /tmp folder to access the glibc APKs:
 RUN --mount=type=bind,from=build,source=/tmp,target=/tmp \
-      apk --no-cache --force-overwrite --allow-untrusted add \
+    apk --no-cache --force-overwrite --allow-untrusted add \
       /tmp/glibc.apk \
-      /tmp/glibc-bin.apk
+      /tmp/glibc-bin.apk \
+    && ln -s /usr/local/bin/bun /usr/local/bin/bunx \
+    && which bun \
+    && which bunx \
+    && bun --version
 
 RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
   postgresql${POSTGRES_VERSION}-client \
   && apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev ffmpeg git nano && rm  -rf /tmp/* /var/cache/apk/*
 
 RUN npm install -g npm \
-    && npm install -g bun pnpm svgo
+    && npm install -g pnpm svgo
 
 
 RUN adduser -D sail
