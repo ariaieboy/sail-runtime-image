@@ -11,10 +11,10 @@ ARG BUN_VERSION=latest
 
 # https://github.com/sgerrand/alpine-pkg-glibc/releases
 # https://github.com/sgerrand/alpine-pkg-glibc/issues/176
-ARG GLIBC_VERSION=latest
+ARG GLIBC_VERSION=2.34-r0
 
 # https://github.com/oven-sh/bun/issues/5545#issuecomment-1722461083
-ARG GLIBC_VERSION_AARCH64=latest
+ARG GLIBC_VERSION_AARCH64=2.26-r1
 
 RUN apk --no-cache add \
       ca-certificates \
