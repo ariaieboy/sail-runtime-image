@@ -44,7 +44,6 @@ jobs:
           build-args: NODE_VERSION=${{ matrix.node }}
           tags: |
            ariaieboy/sail-runtime-image:${{ matrix.php }}-${{ matrix.node }}
-           ${{ (matrix.node == 20 && matrix.php < 8.3) && format('ariaieboy/sail-runtime-image:{0}',matrix.php) || null }}
-           ${{ (matrix.node == 22 && matrix.php >= 8.3) && format('ariaieboy/sail-runtime-image:{0}',matrix.php) || null }}
+           ${{ (matrix.node == 20) && format('ariaieboy/sail-runtime-image:{0}',matrix.php) || null }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
