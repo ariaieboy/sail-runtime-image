@@ -39,7 +39,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           context: ./runtimes/common
-          file: ./runtimes/${{ matrix.php }}/Dockerfile
+          file: ./runtimes/${{ matrix.php }}/DockerfileAlpine
           push: true
           build-args: NODE_VERSION=${{ matrix.node }}
           tags: |
