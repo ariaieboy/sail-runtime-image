@@ -37,9 +37,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-            #TODO: enable arm64 when the node22 bug fixed
-#           platforms: linux/amd64,linux/arm64
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           context: ./runtimes/common
           file: ./runtimes/${{ matrix.php }}/DockerfileAlpine
           push: true
