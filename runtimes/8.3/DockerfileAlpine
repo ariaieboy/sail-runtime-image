@@ -142,6 +142,6 @@ COPY php.ini "$PHP_INI_DIR/php.ini"
 RUN mkdir -p /var/log/supervisor
 RUN chmod +x /usr/local/bin/start-container
 
-EXPOSE 8000
+EXPOSE 80/tcp
 
 ENTRYPOINT ["start-container"]
