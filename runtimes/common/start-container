@@ -12,7 +12,7 @@ fi
 
 if [ -n "$WWWGROUP" ]; then
     echo "groupmod run"
-    groupmod -g $WWWGROUP sail
+    groupadd --force -g $WWWGROUP sail
 fi
 
 if [ ! -d /.composer ]; then
