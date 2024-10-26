@@ -1,5 +1,5 @@
 ARG NODE_VERSION
-ARG POSTGRES_VERSION=16
+ARG POSTGRES_VERSION=17
 FROM alpine:3.18 AS build
 
 # https://github.com/oven-sh/bun/releases
