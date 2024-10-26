@@ -180,7 +180,7 @@ Every other component will be updated to the latest version with each build.
 
 > We only support the active maintenance versions of the packages. For example, if the NodeJS 18 support ends we are gonna remove the tags that contain NodeJS 18 from the build process.
 
-> You can still pull the latest builds for EOL tags but they are not gonna get updated anymore and you need to maintain those tags yourself.
+> You can still pull the latest builds for EOL tags, but they will not be updated anymore, and you will need to maintain those tags yourself.
 
 ## License
 
