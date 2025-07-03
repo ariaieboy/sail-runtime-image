@@ -176,14 +176,16 @@ the alpine version.
 
 * Node.js version:
 
-In new tags, we are only supporting the latest LTS version of the Node.js. For example, PHP 8.3 only supports Node.js version >=20.
+In new tags, we are only supporting the latest LTS version of the Node.js. For example, PHP 8.3 only supports Node.js
+version >=20.
 If a new LTS version of Node.js is released, we are going to add a new image tag with that specific Node.js version. But
 the default one will only be the first version.
 We also remove the old Node.js versions from the build process after they reach EOL.
 
 * PostgreSQL Client:
 
-Since every major version of PostgresSQL Client is backward compatible with all supported versions of PostgreSQL, we will
+Since every major version of PostgresSQL Client is backward compatible with all supported versions of PostgreSQL, we
+will
 update the Client to the latest version in all tags.
 
 * Other components:
@@ -195,6 +197,9 @@ Every other component will be updated to the latest version with each build.
 
 > You can still pull the latest builds for EOL tags, but they will not be updated anymore, and you will need to maintain
 > those tags yourself.
+
+> We removed bunjs from the alpine image since it has some problems. use the default image instead of alpine variant if
+> you use bunjs.
 
 ## License
 
