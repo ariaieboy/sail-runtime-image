@@ -13,14 +13,16 @@ You can remove the build step by using our Pre-built images.
 | Tags                        | Description                             |
 |-----------------------------|-----------------------------------------|
 | `8.1`,`8.1-20`              | PHP 8.1, Node 20                        |
-| `8.1-18`                    | PHP 8.1, Node 18                        |
 | `8.1-22`                    | PHP 8.1, Node 22                        |
+| `8.1-24`                    | PHP 8.1, Node 24                        |
 | `8.2`,`8.2-20`              | PHP 8.2, Node 20                        |
-| `8.2-18`                    | PHP 8.2, Node 18                        |
 | `8.2-22`                    | PHP 8.2, Node 22                        |
+| `8.2-24`                    | PHP 8.2, Node 24                        |
 | `8.3`,`8.3-20`              | PHP 8.3, Node 20                        |
 | `8.3-22`                    | PHP 8.3, Node 22                        |
-| `8.4`,`8.4-22`               | PHP 8.4, Node 22                        |
+| `8.3-24`                    | PHP 8.3, Node 24                        |
+| `8.4`,`8.4-22`              | PHP 8.4, Node 22                        |
+| `8.4-24`                    | PHP 8.4, Node 24                        |
 | `8.x-alpine`,`8.x-y-alpine` | same as above with Alpine as base image |
 
 ## Usage
@@ -158,7 +160,7 @@ You can provide a new env variable called `SUPERVISOR_PHP_COMMAND` and pass a cu
 
 To update the image you only need to run `sail pull` and restart your containers.
 
-## Version Support Policy 
+## Version Support Policy
 
 Every Image has lots of dependencies that can have multiple versions.
 
@@ -166,25 +168,33 @@ We break this into 3 major components.
 
 * OS version:
 
-In base images, we are going to use the latest LTS version of the Ubuntu. For example, when PHP 8.3 was released the latest LTS version of Ubuntu was 22.04 so we created the base image using the Ubuntu 22.04.
-In alpine variants, we use the PHP8.x-cli-alpine image as the base so we are tied to the PHP official docker image for the alpine version.
+In base images, we are going to use the latest LTS version of the Ubuntu. For example, when PHP 8.3 was released the
+latest LTS version of Ubuntu was 22.04 so we created the base image using the Ubuntu 22.04 and after releasing Ubuntu
+24.04 we upgraded to the 24.04.
+In alpine variants, we use the PHP8.x-cli-alpine image as the base so we are tied to the PHP official docker image for
+the alpine version.
 
-* NodeJS version:
+* Node.js version:
 
-In new tags, we are only supporting the latest LTS version of the NodeJS. For example, PHP 8.3 only supports NodeJS 20.
-If a new LTS version of NodeJS is released, we are going to add a new image tag with that specific NodeJS version. But the default one will only be the first version.
+In new tags, we are only supporting the latest LTS version of the Node.js. For example, PHP 8.3 only supports Node.js version >=20.
+If a new LTS version of Node.js is released, we are going to add a new image tag with that specific Node.js version. But
+the default one will only be the first version.
+We also remove the old Node.js versions from the build process after they reach EOL.
 
 * PostgreSQL Client:
 
-Since every major version of PostgreSQL Client is backward compatible with all supported versions of PostgreSQL, we will update the Client to the latest version in all tags.
+Since every major version of PostgresSQL Client is backward compatible with all supported versions of PostgreSQL, we will
+update the Client to the latest version in all tags.
 
 * Other components:
 
 Every other component will be updated to the latest version with each build.
 
-> We only support the active maintenance versions of the packages. For example, if the NodeJS 18 support ends we are gonna remove the tags that contain NodeJS 18 from the build process.
+> We only support the active maintenance versions of the packages. For example, if the Node.js 18 support ends we are
+> going to remove the tags that contain Node.js 18 from the build process.
 
-> You can still pull the latest builds for EOL tags, but they will not be updated anymore, and you will need to maintain those tags yourself.
+> You can still pull the latest builds for EOL tags, but they will not be updated anymore, and you will need to maintain
+> those tags yourself.
 
 ## License
 
