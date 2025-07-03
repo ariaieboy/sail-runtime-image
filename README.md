@@ -2,6 +2,7 @@
 
 ![Ariaieboy Sail Runtime Image](https://preview.dragon-code.pro/Ariaieboy/Sail%20Runtime%20Image.svg?brand=docker&github%5Brepository%5D=ariaieboy%2Fsail-runtime-image)
 [![Docker Badge](https://img.shields.io/docker/pulls/ariaieboy/sail-runtime-image)](https://hub.docker.com/r/ariaieboy/sail-runtime-image/)
+[![build](https://github.com/ariaieboy/sail-runtime-image/actions/workflows/build.yml/badge.svg)](https://github.com/ariaieboy/sail-runtime-image/actions/workflows/build.yml)
 [![build-alpine](https://github.com/ariaieboy/sail-runtime-image/actions/workflows/build-alpine.yml/badge.svg)](https://github.com/ariaieboy/sail-runtime-image/actions/workflows/build-alpine.yml)
 
 One of the Laravel Sail problems is the build step. Depending on your network and machine power, it might take a while
