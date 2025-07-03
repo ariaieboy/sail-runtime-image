@@ -207,3 +207,7 @@ Every other component will be updated to the latest version with each build.
 Copyright © AriaieBOY
 
 Sail Runtime Image is open-sourced software licensed under the [MIT license](LICENSE).
+
+## Sync status
+
+Synced with [laravel sail 1.43.1](https://github.com/laravel/sail/releases/tag/v1.43.1)
