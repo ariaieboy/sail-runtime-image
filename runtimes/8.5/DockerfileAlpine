@@ -16,8 +16,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-#     igbinary swoole-^6 xdebug imagick
-    install-php-extensions @composer pcov msgpack  pgsql  mongodb gd imap zip bcmath pcntl soap intl exif ldap redis opcache memcached pdo_pgsql pdo_mysql xhprof
+#      swoole-^6 xdebug 
+    install-php-extensions @composer imagick pcov igbinary msgpack  pgsql  mongodb gd imap zip bcmath pcntl soap intl exif ldap redis opcache memcached pdo_pgsql pdo_mysql xhprof
 COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
