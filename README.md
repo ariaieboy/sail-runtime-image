@@ -211,4 +211,4 @@ Sail Runtime Image is open-sourced software licensed under the [MIT license](LIC
 
 ## Sync status
 
-Synced with [laravel sail 1.43.1](https://github.com/laravel/sail/releases/tag/v1.43.1)
+Synced with [laravel sail 1.51.0](https://github.com/laravel/sail/releases/tag/v1.51.0)
