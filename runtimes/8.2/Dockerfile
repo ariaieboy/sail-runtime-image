@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 LABEL maintainer="AriaieBOY"
 
 ARG NODE_VERSION
-ARG POSTGRES_VERSION=17
+ARG POSTGRES_VERSION=18
 
 WORKDIR /var/www/html
 
@@ -11,12 +11,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 ENV SUPERVISOR_PHP_USER="sail"
+ENV PLAYWRIGHT_BROWSERS_PATH=0
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
         && mkdir -p /etc/apt/keyrings \
-        && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python3 dnsutils librsvg2-bin fswatch ffmpeg nano libheif-dev libavif-dev jpegoptim optipng pngquant gifsicle \
+        && apt-get install -y libgd3 gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python3 dnsutils librsvg2-bin fswatch ffmpeg nano libheif-dev libavif-dev jpegoptim optipng pngquant gifsicle \
         && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb8dc7e53946656efbce4c1dd71daeaab4ad4cab6' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
         && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu noble main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
@@ -36,6 +37,7 @@ RUN apt-get update \
     && apt-get install -y nodejs \
     && npm install -g npm \
     && npm install -g bun pnpm svgo \
+    && npx playwright install-deps \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /etc/apt/keyrings/yarn.gpg >/dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/keyrings/pgdg.gpg >/dev/null \
@@ -51,6 +53,7 @@ RUN apt-get update \
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 RUN userdel -r ubuntu
 RUN useradd -ms /bin/bash -u 1337 sail
+RUN git config --global --add safe.directory /var/www/html
 
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
