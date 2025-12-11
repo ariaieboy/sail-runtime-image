@@ -13,9 +13,6 @@ You can remove the build step by using our Pre-built images.
 
 | Tags                        | Description                             |
 |-----------------------------|-----------------------------------------|
-| `8.1`,`8.1-20`              | PHP 8.1, Node 20                        |
-| `8.1-22`                    | PHP 8.1, Node 22                        |
-| `8.1-24`                    | PHP 8.1, Node 24                        |
 | `8.2`,`8.2-20`              | PHP 8.2, Node 20                        |
 | `8.2-22`                    | PHP 8.2, Node 22                        |
 | `8.2-24`                    | PHP 8.2, Node 24                        |
@@ -35,11 +32,11 @@ After installing [laravel-sail](https://laravel.com/docs/sail) you must remove t
 services:
     laravel.test:
 -        build:
--            context: ./vendor/laravel/sail/runtimes/8.2
+-            context: ./vendor/laravel/sail/runtimes/8.5
 -            dockerfile: Dockerfile
 -            args:
 -                WWWGROUP: '${WWWGROUP}'
-        image: sail-8.2/app
+        image: sail-8.5/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -52,12 +49,12 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
 ```
 
-Then you need to change the image to `ariaieboy/sail-runtime-image:version` the version can be `8.1`,`8.2`,`8.3`:
+Then you need to change the image to `ariaieboy/sail-runtime-image:version` the version can be `8.2`,`8.3`,`8.4`,`8.5`:
 
 ```diff
 services:
     laravel.test:
-+       image: ariaieboy/sail-runtime-image:8.3
++       image: ariaieboy/sail-runtime-image:8.5
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -77,7 +74,7 @@ The final `laravel.test` service should look like this:
 ```yml
 services:
   laravel.test:
-    image: ariaieboy/sail-runtime-image:8.2
+    image: ariaieboy/sail-runtime-image:8.5
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -101,7 +98,7 @@ For using Alpine you can add `user` to the docker-compose service:
 ```yml
 services:
   laravel.test:
-    image: ariaieboy/sail-runtime-image:8.2-alpine
+    image: ariaieboy/sail-runtime-image:8.5-alpine
     user: "${WWWUSER}:${WWWGROUP}"
     extra_hosts:
       - 'host.docker.internal:host-gateway'
