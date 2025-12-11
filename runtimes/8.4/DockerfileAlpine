@@ -29,7 +29,7 @@ RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
   && apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev ffmpeg git nano && rm  -rf /tmp/* /var/cache/apk/*
 
 RUN npm install -g npm \
-    && npm install -g pnpm svgo \
+    && npm install -g pnpm svgo
 #    && npx playwright install-deps --dry-run TODO: fix this for alpine
 
 
