@@ -13,10 +13,6 @@ You can remove the build step by using our Pre-built images.
 
 | Tags                        | Description                             |
 |-----------------------------|-----------------------------------------|
-| `8.2`,`8.2-20`              | PHP 8.2, Node 20                        |
-| `8.2-22`                    | PHP 8.2, Node 22                        |
-| `8.2-24`                    | PHP 8.2, Node 24                        |
-| `8.3`,`8.3-20`              | PHP 8.3, Node 20                        |
 | `8.3-22`                    | PHP 8.3, Node 22                        |
 | `8.3-24`                    | PHP 8.3, Node 24                        |
 | `8.4`,`8.4-22`              | PHP 8.4, Node 22                        |
