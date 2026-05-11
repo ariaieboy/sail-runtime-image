@@ -21,8 +21,7 @@ RUN apt-get update \
         && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb8dc7e53946656efbce4c1dd71daeaab4ad4cab6' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
         && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu noble main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
-#      php8.5-swoole php8.5-xdebug
-    && apt-get install -y php8.5-cli php8.5-dev \
+    && apt-get install -y php8.5-cli php8.5-dev php8.5-swoole php8.5-xdebug \
        php8.5-pgsql php8.5-sqlite3 php8.5-gd \
        php8.5-curl php8.5-msgpack php8.5-imap \
        php8.5-mysql php8.5-imagick php8.5-mbstring php8.5-mongodb \

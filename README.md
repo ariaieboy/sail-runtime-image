@@ -14,8 +14,11 @@ You can remove the build step by using our Pre-built images.
 | Tags                        | Description                             |
 |-----------------------------|-----------------------------------------|
 | `8.3-24`                    | PHP 8.3, Node 24                        |
+| `8.3-26`                    | PHP 8.3, Node 26                        |
 | `8.4-24`                    | PHP 8.4, Node 24                        |
+| `8.4-26`                    | PHP 8.4, Node 26                        |
 | `8.5`,`8.5-24`              | PHP 8.5, Node 24                        |
+| `8.5-26`                    | PHP 8.5, Node 26                        |
 | `8.x-alpine`,`8.x-y-alpine` | same as above with Alpine as base image |
 
 ## Usage
