@@ -30,8 +30,8 @@ RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
 RUN npm install -g npm \
     && npm install -g pnpm svgo corepack \
     && corepack enable \
-    && corepack prepare yarn@stable --activate \
-    && npx -y playwright install-deps
+    && corepack prepare yarn@stable --activate
+#    && npx -y playwright install-deps
 
 RUN adduser -D sail
 
